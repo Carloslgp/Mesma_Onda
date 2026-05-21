@@ -55,9 +55,9 @@ precisão_média = soma_precisões / total_respostas
 | RF-05 | Entrar como convidado | O sistema deve permitir que um visitante não autenticado responda à pergunta do dia. A sessão de convidado não tem persistência de dados e nem pode ver a mediana do dia. O sistema deve oferecer a opção de criar conta para salvar o resultado e ver o quão perto o usuário ficou da mediana. | Média | Aguardando |
 | RF-06 | Troca de senha | O sistema deve ser capaz de realizar a troca da senha da conta de um usuário. | Alta | Aguardando |
 | RF-07 | Cadastro da resposta do usuário | O sistema deve cadastrar a resposta de todos os usuários. | Alta | Aguardando |
-| RF-08 | Cálculo da mediana | O sistema deve manter a mediana coletiva atualizada conforme novas respostas são processadas, utilizando cálculo incremental (sem varredura completa do conjunto de respostas a cada submissão). | Alta | Aguardando |
+| RF-08 | Cálculo da mediana | O sistema deve manter a mediana coletiva atualizada conforme novas respostas são processadas, utilizando cálculo incremental (sem varredura completa do conjunto de respostas a cada submissão). A mediana deve ser recalculada e publicada a cada 5 minutos. | Alta | Aguardando |
 | RF-09 | O sistema deve possuir três rankings | O sistema deve possuir os rankings diário, semanal e mensal. | Média | Aguardando |
-| RF-10 | O sistema deve recalcular os três rankings | O sistema deve ser capaz de recalcular os três rankings. | Média | Aguardando |
+| RF-10 | O sistema deve recalcular os três rankings |O sistema deve recalcular os três rankings a cada 15 minutos, refletindo as pontuações mais recentes dos usuários. | Média | Aguardando |
 | RF-11 | Registro de nome de usuário | O sistema deve receber e cadastrar um nome de usuário para cada usuário. | Alta | Aguardando |
 | RF-12 | Armazenamento de respostas antigas dos usuários | O sistema deve armazenar todas as respostas antigas dos usuários. | Baixa | Aguardando |
 | RF-13 | Armazenamento de perguntas | O sistema deve armazenar todas as perguntas e os seus dados. | Média | Aguardando |
@@ -80,3 +80,22 @@ precisão_média = soma_precisões / total_respostas
 | RF-30 | Modo diversão | O usuário pode responder perguntas passadas, mas elas não terão peso para a sua pontuação, precisão ou participação no ranking. Servirão apenas para verificar o quão próximo o usuário chega da mediana histórica daquela pergunta. | Média | Aguardando |
 | RF-31 | Respostas do modo convidado | Usuários convidados não têm a sua resposta registrada no sistema. | Alta | Aguardando |
 | RF-32 | Metadados da pergunta | Cada pergunta deve declarar: enunciado textual, tipo de input, valor mínimo aceito, valor máximo aceito, e data de publicação. | Alta | Aguardando |
+
+## 2. Requisitos não funcionais
+
+| ID | Nome | Descrição | Prioridade | Status |
+|---|---|---|---|---|
+| RNF-01 | Tolerância de atraso do ranking | O reset automático dos rankings deve ser executado em até 15 minutos após o horário programado (00:00 BRT). | Média | Aguardando |
+| RNF-02 | Histórico de rankings | O sistema deve manter o histórico dos rankings pelos seguintes períodos: diário por 1 dia, semanal por 2 semanas, e mensal até o primeiro dia do mês seguinte.| Baixa | Aguardando |
+| RNF-03 | Responsividade | A interface deve ser responsiva e funcional nas seguintes larguras mínimas: 360px (mobile), 768px (tablet) e 1280px (desktop/notebook). | Alta | Aguardando |
+| RNF-04 | Navegadores suportados | A interface deve funcionar corretamente nas versões mais recentes do Chrome, Firefox, Safari e Edge. | Alta | Aguardando |
+| RNF-05 | Suporte simultâneo | O sistema deve suportar até 50 usuários simultâneos sem degradação de desempenho no MVP. | Alta | Aguardando | 
+| RNF-06 | Arquitetura |A arquitetura deve permitir escalar para até 500 usuários simultâneos sem reescrita estrutural. | Alta | Aguardando |
+| RNF-07 | Tempo de resposta | O endpoint de submissão de resposta deve retornar em até 2 segundos em condições normais de operação. | Alta | Aguardando |
+| RNF-08 | Usabilidade | Um usuário novo deve conseguir entender a mecânica do jogo e submeter sua primeira resposta em até 1 minuto, sem necessidade de instrução externa. | Alta | Aguardando |
+| RNF-09 | Navegação | A interface deve ser parcialmente compatível com leitores de tela, com textos alternativos em elementos interativos e navegação básica por teclado. | Média | Aguardando |
+| RNF-10 | Contraste e daltonismo |A interface deve seguir o nível AA das diretrizes WCAG 2.1 para contraste de cores, garantindo acessibilidade para usuários com daltonismo. | Média | Aguardando |
+| RNF-11 | Uma resposta por usuário |A unicidade de resposta deve ser validada no backend, independentemente do cliente. Requisições duplicadas à API devem ser rejeitadas com erro 409. | Alta | Aguardando |
+| RNF-12 | Visualização da mediana diária | A mediana da pergunta ativa deve ser protegida tanto no frontend quanto no backend. A API deve rejeitar requisições de acesso à mediana de usuários que ainda não responderam à pergunta do dia, retornando erro 403. | Alta | Aguardando |
+| RNF-13 | Duração da sessão do usuário | A sessão autenticada deve persistir por 48 horas via cookie seguro (HttpOnly, Secure). Após esse período o usuário deve ser redirecionado para o login. | Alta | Aguardando |
+
